@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💖 Baby Name Generator 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #f5d0b7, #f9c8d1);
+      color: #333;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 3.5em;
+      margin-bottom: 10px;
+      color: #ff70a6;
+      letter-spacing: 2px;
+    }
+
+    .generator-box {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 40px;
+      width: 90%;
+      max-width: 650px;
+      margin: 0 auto;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    }
+
+    select, button {
+      padding: 12px 24px;
+      margin: 10px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background-color: #ffb3d9;
+      color: #fff;
+      transition: background 0.3s ease;
+    }
+
+    select:hover, button:hover {
+      background-color: #ff70a6;
+    }
+
+    .name-result {
+      font-size: 2.5em;
+      margin: 30px 0 10px;
+      font-weight: bold;
+      animation: glow 2s infinite alternate;
+      color: #ff70a6;
+    }
+
+    .oracle {
+      font-size: 1.3em;
+      color: #555;
+      margin-top: 15px;
+      font-style: italic;
+      transition: opacity 0.4s ease-in-out;
+      min-height: 60px;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #ff70a6, 0 0 20px #ff70a6;
+      }
+      to {
+        text-shadow: 0 0 20px #ff70a6, 0 0 30px #ff70a6;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>💖 Baby Name Generator 💖</h1>
+  <p>Choose the perfect name for your little one!</p>
+
+  <div class="generator-box">
+    <select id="style">
+      <option value="modern">Modern</option>
+      <option value="vintage">Vintage</option>
+      <option value="fantasy">Fantasy</option>
+      <option value="mythological">Mythological</option>
+      <option value="nature">Nature-Inspired</option>
+      <option value="futuristic">Futuristic</option>
+      <option value="popculture">Pop Culture</option>
+    </select>
+
+    <select id="gender">
+      <option value="girl">Girl</option>
+      <option value="boy">Boy</option>
+      <option value="any">Any</option>
+    </select>
+
+    <select id="region">
+      <option value="global">Global</option>
+      <option value="nordic">Nordic</option>
+      <option value="japanese">Japanese</option>
+      <option value="arabic">Arabic</option>
+      <option value="french">French</option>
+      <option value="african">African</option>
+      <option value="slavic">Slavic</option>
+      <option value="nativeamerican">Native American</option>
+      <option value="indian">Indian (Hindi/Sanskrit)</option>
+    </select>
+
+    <button id="generateBtn">✨ Generate Name ✨</button>
+
+    <div class="name-result" id="resultName">👶</div>
+    <div class="oracle" id="oracleMessage"></div>
+  </div>
+
+  <script>
+    const names = {
+      modern: { boy: ["Jaxon", "Kai", "Zayden", "Leo", "Maverick"], girl: ["Nova", "Aria", "Zoe", "Luna", "Harper"] },
+      vintage: { boy: ["Theodore", "Henry", "Arthur", "Walter", "Oscar"], girl: ["Clara", "Eleanor", "Mabel", "Florence", "Hazel"] },
+      fantasy: { boy: ["Aelric", "Thorne", "Draven", "Kael", "Lucan"], girl: ["Elira", "Sylvi", "Arwen", "Lyra", "Nimara"] },
+      mythological: { boy: ["Zeus", "Apollo", "Hercules", "Thor", "Loki"], girl: ["Athena", "Freya", "Artemis", "Hera", "Persephone"] },
+      nature: { boy: ["River", "Ash", "Oak", "Sky", "Wolf"], girl: ["Willow", "Rose", "Ivy", "Lily", "Autumn"] },
+      futuristic: { boy: ["Zane", "Caden", "Axel", "Kai", "Jett"], girl: ["Nova", "Astra", "Lyra", "Quinn", "Zara"] },
+      popculture: { boy: ["Luke", "Anakin", "Jon", "Harry", "Clark"], girl: ["Leia", "Aria", "Khaleesi", "Hermione", "Wanda"] },
+      nordic: { boy: ["Bjorn", "Erik", "Leif", "Sven", "Thor"], girl: ["Astrid", "Freya", "Ingrid", "Saga", "Liv"] },
+      japanese: { boy: ["Haruto", "Ren", "Takumi", "Souta", "Kaito"], girl: ["Yui", "Hana", "Aiko", "Rin", "Mei"] },
+      arabic: { boy: ["Omar", "Yusuf", "Khalid", "Tariq", "Samir"], girl: ["Layla", "Noor", "Amina", "Zara", "Nadia"] },
+      french: { boy: ["Louis", "Jules", "Hugo", "Emile", "Maxime"], girl: ["Amelie", "Chloe", "Sophie", "Juliette", "Elodie"] },
+      african: { boy: ["Kofi", "Kwame", "Zuberi", "Tariq", "Omar"], girl: ["Amina", "Zara", "Imani", "Nia", "Asha"] },
+      slavic: { boy: ["Vladimir", "Alexei", "Mikhail", "Nikolai", "Dmitri"], girl: ["Anastasia", "Katerina", "Olga", "Irina", "Elena"] },
+      nativeamerican: { boy: ["Dakota", "Tawodi", "Ahyoka", "Kitchi", "Takoda"], girl: ["Aiyana", "Takara", "Wynona", "Sakari", "Pavati"] },
+      indian: { boy: ["Aarav", "Vivaan", "Ishaan", "Raghav", "Dev"], girl: ["Aditi", "Anaya", "Meera", "Isha", "Priya"] }
+    };
+
+    const predictions = {
+      modern: ["will disrupt trends and start new ones!", "has a bright future in tech innovation!", "is destined to shine on social media!"],
+      vintage: ["will bring old soul wisdom to the world.", "was born to host elegant tea parties.", "might love classic literature and jazz."],
+      fantasy: ["will ride dragons before their fifth birthday.", "is fated to discover hidden kingdoms.", "might have magical powers by moonlight."],
+      mythological: ["will wrestle gods and win.", "is descended from legends untold.", "was born under a divine prophecy."],
+      nature: ["will talk to trees and animals.", "is most at peace barefoot in a forest.", "might one day protect the planet."],
+      futuristic: ["will explore galaxies in a neon spacesuit.", "may invent teleportation.", "is from the year 3024 (but don’t tell anyone)."],
+      popculture: ["will star in their own Netflix series.", "knows every fandom ever.", "may be the next superhero."],
+    };
+
+    const resultName = document.getElementById("resultName");
+    const oracleMessage = document.getElementById("oracleMessage");
+
+    function getRandom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function generateName() {
+      const style = document.getElementById("style").value;
+      let gender = document.getElementById("gender").value;
+      const region = document.getElementById("region").value;
+
+      if (gender === "any") gender = Math.random() < 0.5 ? "boy" : "girl";
+
+      let pool = [];
+
+      if (region !== "global" && names[region] && names[region][gender]) {
+        pool = names[region][gender];
+      } else if (names[style] && names[style][gender]) {
+        pool = names[style][gender];
+      }
+
+      const name = getRandom(pool);
+      resultName.textContent = name;
+
+      const prediction = getRandom(predictions[style] || ["has a mysterious destiny..."]);
+      oracleMessage.textContent = `${name} ${prediction}`;
+    }
+
+    document.getElementById("generateBtn").addEventListener("click", generateName);
+  </script>
+</body>
+</html>
+
+
+
